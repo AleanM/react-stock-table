@@ -16,11 +16,19 @@ const StockReportsTable = ({
 	}, [fetchStockReports]);
 
 	if (loading) {
-		return <div>Loading...</div>;
+		return (
+			<div className="loader-container">
+				<div className="loader"></div>
+			</div>
+		);
 	}
 
 	if (error) {
-		return <div>Error: {error}</div>;
+		return (
+			<div className="error-container">
+				<div className="error-message">Ошибка загрузки: {error}</div>
+			</div>
+		);
 	}
 	//Количество отчётов на странице
 	const reportsPerPage = 10;
@@ -30,6 +38,10 @@ const StockReportsTable = ({
 	const indexOfFirstReport = indexOfLastReport - reportsPerPage;
 	// Получение отчетов, соответствующих странице
 	const currentReports = reports.slice(indexOfFirstReport, indexOfLastReport);
+
+	const totalItems = reports.length;
+
+	const totalPages = Math.ceil(totalItems / reportsPerPage);
 
 	//Обработчик следующей страницы
 	const handleNextPage = () => {
@@ -93,17 +105,21 @@ const StockReportsTable = ({
 					</button>
 				)}
 			</div>
+			<div className="page-info">
+				<span>{currentPage}</span> / {totalPages}
+			</div>
 		</div>
 	);
 };
 
+//Преобразования состояния Redux в свойства (props)
 const mapStateToProps = (state) => ({
 	reports: state.reports,
 	loading: state.loading,
 	error: state.error,
 	currentPage: state.currentPage,
 });
-
+//Связывает функции-действия (actions) из файла actions.js с методом dispatch Redux
 const mapDispatchToProps = (dispatch) => {
 	return {
 		fetchStockReports: () => dispatch(fetchStockReports()),
