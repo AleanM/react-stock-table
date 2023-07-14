@@ -4,6 +4,7 @@ export const FETCH_STOCK_REPORTS_FAILURE = "FETCH_STOCK_REPORTS_FAILURE";
 
 export const fetchStockReports = () => {
 	return (dispatch) => {
+		//Получение данных через fetch запрос
 		dispatch({ type: FETCH_STOCK_REPORTS_REQUEST });
 
 		fetch(
@@ -19,6 +20,7 @@ export const fetchStockReports = () => {
 			.then((data) => {
 				dispatch({ type: FETCH_STOCK_REPORTS_SUCCESS, payload: data });
 			})
+			//Обработчик при возникновении ошибки при получение данных
 			.catch((error) => {
 				dispatch({ type: FETCH_STOCK_REPORTS_FAILURE, payload: error.message });
 			});
