@@ -69,7 +69,7 @@ const StockReportsTable = ({
 				</thead>
 				<tbody>
 					{currentReports.map((report, index) => (
-						<tr key={report.id}>
+						<tr key={report.updated}>
 							<td>{index + 1}</td>
 							<td>{formatStr(report.fullName)}</td>
 							<td>{formatValue(report.totalBought)}</td>
